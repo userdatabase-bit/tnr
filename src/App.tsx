@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef, lazy, Suspense } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { COMPANY_NAME, SITE_URL } from './constants';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import { WaveDivider, AngledDivider } from './components/Dividers';
@@ -283,7 +285,22 @@ function WhatsAppFloat() {
 // ── Root app ─────────────────────────────────────────────────────────────────
 export default function App() {
   return (
-    <div className="relative">
+    <>
+      <Helmet>
+        <title>{COMPANY_NAME} — Premium Packaging, Pallets & Digital Printing</title>
+        <meta name="description" content={`${COMPANY_NAME}: Premium wooden boxes, corrugated boxes, press wood & timber pallets, edge protectors, and digital printing in Greater Noida, India.`} />
+        <link rel="canonical" href={SITE_URL} />
+        {/* Open Graph */}
+        <meta property="og:title" content={`${COMPANY_NAME} — Premium Packaging, Pallets & Digital Printing`} />
+        <meta property="og:description" content="Premium wooden boxes, corrugated boxes, pallets, edge protectors, and digital printing solutions." />
+        <meta property="og:url" content={SITE_URL} />
+        <meta property="og:type" content="website" />
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${COMPANY_NAME} — Premium Packaging, Pallets & Digital Printing`} />
+        <meta name="twitter:description" content="Premium packaging and pallet solutions built for strength, reliability, and brand impact." />
+      </Helmet>
+      <div className="relative">
       <LoadingScreen />
       <ScrollProgress />
       <CustomCursor />
@@ -317,5 +334,6 @@ export default function App() {
         </Suspense>
       </main>
     </div>
+    </>
   );
 }

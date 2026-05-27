@@ -1,4 +1,10 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState } from 'react';
+import {
+  getBoxStyles,
+  stripStyle, bracketStyle, boltStyle,
+  latchStyle, latchInnerStyle,
+  COLORS,
+} from '../utils/woodenBoxStyles';
 
 interface WoodenBoxProps {
   /** Rotation duration in seconds — lower = faster */
@@ -11,26 +17,24 @@ interface WoodenBoxProps {
   size?: number;
   /** Wood base color hex */
   woodColor?: string;
-  /** Hide the play/pause and speed controls */
-  hideControls?: boolean;
 }
 
 export default function WoodenBox({
   speed = 9,
-  label = "TNR",
-  subLabel = "SOLUTIONS",
+  label = 'TNR',
+  subLabel = 'SOLUTIONS',
   size = 200,
-  woodColor = "#C9884C",
-  hideControls = false,
+  woodColor = '#C9884C',
 }: WoodenBoxProps) {
-  const half = size / 2;
   const [paused, setPaused] = useState(false);
   const [currentSpeed, setCurrentSpeed] = useState(speed);
   const wrapRef = useRef<HTMLDivElement>(null);
 
+  const sz = getBoxStyles(size, woodColor);
+
   useEffect(() => {
     if (wrapRef.current) {
-      wrapRef.current.style.animationPlayState = paused ? "paused" : "running";
+      wrapRef.current.style.animationPlayState = paused ? 'paused' : 'running';
     }
   }, [paused]);
 
@@ -40,119 +44,14 @@ export default function WoodenBox({
     }
   }, [currentSpeed]);
 
-  const faceStyle: React.CSSProperties = {
-    position: "absolute",
-    width: size,
-    height: size,
-    overflow: "hidden",
-  };
+  // ── Wood-grain texture objects ───────────────────────────────────────────
+  const faceTextures = {
+    H: { background: sz.grainH },
+    V: { background: sz.grainV },
+  } as const;
 
-  const grainH: React.CSSProperties = {
-    width: "100%",
-    height: "100%",
-    position: "relative",
-    background: `repeating-linear-gradient(
-      0deg,
-      rgba(0,0,0,0.09) 0, rgba(0,0,0,0.09) 1px,
-      transparent 1px, transparent ${size / 4}px
-    ), ${woodColor}`,
-  };
-
-  const grainV: React.CSSProperties = {
-    width: "100%",
-    height: "100%",
-    position: "relative",
-    background: `repeating-linear-gradient(
-      90deg,
-      rgba(0,0,0,0.07) 0, rgba(0,0,0,0.07) 1px,
-      transparent 1px, transparent ${size / 4}px
-    ), ${woodColor}`,
-  };
-
-  const stripThick = Math.max(8, size * 0.05);
-  const bracketSize = Math.max(18, size * 0.11);
-  const boltSize = Math.max(5, size * 0.03);
-  const latchW = Math.max(24, size * 0.14);
-  const latchH = Math.max(15, size * 0.09);
-  const logoSize = Math.max(11, size * 0.065);
-  const subSize = Math.max(8, size * 0.045);
-
-  const stripColor = "#7B5B2A";
-  const metalColor = "#A08040";
-  const boltColor = "#6B5020";
-  const latchColor = "#9A7830";
-
-  const stripTop: React.CSSProperties = { position: "absolute", background: stripColor, zIndex: 2, width: "100%", height: stripThick, top: 0, left: 0 };
-  const stripBot: React.CSSProperties = { ...stripTop, top: "auto", bottom: 0 };
-  const stripLeft: React.CSSProperties = { position: "absolute", background: stripColor, zIndex: 2, width: stripThick, height: "100%", top: 0, left: 0 };
-  const stripRight: React.CSSProperties = { ...stripLeft, left: "auto", right: 0 };
-  const midLine: React.CSSProperties = { position: "absolute", background: stripColor, zIndex: 2, width: "100%", height: 2, top: "50%", left: 0 };
-
-  const bracket = (pos: "tl" | "tr" | "bl" | "br"): React.CSSProperties => ({
-    position: "absolute",
-    background: metalColor,
-    zIndex: 3,
-    width: bracketSize,
-    height: bracketSize,
-    top: pos.startsWith("t") ? -1 : "auto",
-    bottom: pos.startsWith("b") ? -1 : "auto",
-    left: pos.endsWith("l") ? -1 : "auto",
-    right: pos.endsWith("r") ? -1 : "auto",
-    borderRadius:
-      pos === "tl" ? "0 0 4px 0" :
-      pos === "tr" ? "0 0 0 4px" :
-      pos === "bl" ? "0 4px 0 0" : "4px 0 0 0",
-  });
-
-  const bolt = (pos: "tl" | "tr" | "bl" | "br"): React.CSSProperties => ({
-    position: "absolute",
-    background: boltColor,
-    zIndex: 4,
-    width: boltSize,
-    height: boltSize,
-    borderRadius: "50%",
-    top: pos.startsWith("t") ? boltSize * 0.6 : "auto",
-    bottom: pos.startsWith("b") ? boltSize * 0.6 : "auto",
-    left: pos.endsWith("l") ? boltSize * 0.6 : "auto",
-    right: pos.endsWith("r") ? boltSize * 0.6 : "auto",
-  });
-
-  const latchStyle: React.CSSProperties = {
-    position: "absolute",
-    zIndex: 5,
-    width: latchW,
-    height: latchH,
-    background: latchColor,
-    borderRadius: 4,
-    border: `2px solid ${boltColor}`,
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-  };
-
-  const latchInner: React.CSSProperties = {
-    position: "absolute",
-    width: latchW * 0.36,
-    height: latchH * 0.45,
-    background: boltColor,
-    borderRadius: 2,
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-  };
-
-  const logoStyle: React.CSSProperties = {
-    position: "absolute",
-    zIndex: 6,
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    textAlign: "center",
-    pointerEvents: "none",
-    lineHeight: 1.3,
-  };
-
-  const Face = ({
+  // ── Face component ───────────────────────────────────────────────────────
+  function Face({
     transform,
     texture,
     brightness,
@@ -162,55 +61,87 @@ export default function WoodenBox({
     withBolts,
   }: {
     transform: string;
-    texture: React.CSSProperties;
+    texture: 'H' | 'V';
     brightness?: number;
     withMid?: boolean;
     withLatch?: boolean;
     withLogo?: boolean;
     withBolts?: boolean;
-  }) => (
-    <div style={{ ...faceStyle, transform }}>
-      <div style={{ ...texture, filter: brightness !== undefined ? `brightness(${brightness})` : undefined }}>
-        <div style={stripTop} />
-        <div style={stripBot} />
-        <div style={stripLeft} />
-        <div style={stripRight} />
-        {withMid && <div style={midLine} />}
-        <div style={bracket("tl")} />
-        <div style={bracket("tr")} />
-        <div style={bracket("bl")} />
-        <div style={bracket("br")} />
-        {withBolts && (
-          <>
-            <div style={bolt("tl")} />
-            <div style={bolt("tr")} />
-            <div style={bolt("bl")} />
-            <div style={bolt("br")} />
-          </>
-        )}
-        {withLatch && (
-          <div style={latchStyle}>
-            <div style={latchInner} />
-          </div>
-        )}
-        {withLogo && (
-          <div style={logoStyle}>
-            <span style={{ display: "block", color: "#5a3510", fontWeight: 700, fontSize: logoSize, letterSpacing: "1.5px", fontFamily: "Arial, sans-serif" }}>
-              {label}
-            </span>
-            {subLabel && (
-              <span style={{ display: "block", color: "#7a5530", fontSize: subSize, letterSpacing: "0.5px", fontFamily: "Arial, sans-serif", marginTop: 2 }}>
-                {subLabel}
-              </span>
-            )}
-          </div>
-        )}
-      </div>
-    </div>
-  );
+  }) {
+    const bg = faceTextures[texture];
 
+    return (
+      <div
+        className="absolute overflow-hidden"
+        style={{ width: size, height: size, transform }}
+      >
+        <div
+          className="relative w-full h-full"
+          style={{
+            ...bg,
+            filter: brightness !== undefined ? `brightness(${brightness})` : undefined,
+          }}
+        >
+          {/* Corner strips */}
+          <div style={stripStyle(sz.stripThick, true)} />
+          <div style={{ ...stripStyle(sz.stripThick, true), top: 'auto', bottom: 0 }} />
+          <div style={stripStyle(sz.stripThick, false)} />
+          <div style={{ ...stripStyle(sz.stripThick, false), left: 'auto', right: 0 }} />
+
+          {withMid && (
+            <div
+              className="absolute top-1/2 left-0 w-full"
+              style={{ height: 2, background: COLORS.strip, zIndex: 2 }}
+            />
+          )}
+
+          {/* Corner brackets */}
+          <div style={bracketStyle('tl', sz)} />
+          <div style={bracketStyle('tr', sz)} />
+          <div style={bracketStyle('bl', sz)} />
+          <div style={bracketStyle('br', sz)} />
+
+          {withBolts && (
+            <>
+              <div style={boltStyle('tl', sz)} />
+              <div style={boltStyle('tr', sz)} />
+              <div style={boltStyle('bl', sz)} />
+              <div style={boltStyle('br', sz)} />
+            </>
+          )}
+
+          {withLatch && (
+            <div style={latchStyle(sz)}>
+              <div style={latchInnerStyle(sz)} />
+            </div>
+          )}
+
+          {withLogo && (
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none z-20 leading-tight">
+              <span
+                className="block font-bold tracking-wider"
+                style={{ color: '#5a3510', fontSize: sz.logoSize, fontFamily: 'Arial, sans-serif' }}
+              >
+                {label}
+              </span>
+              {subLabel && (
+                <span
+                  className="block tracking-wide"
+                  style={{ color: '#7a5530', fontSize: sz.subSize, fontFamily: 'Arial, sans-serif', marginTop: 2 }}
+                >
+                  {subLabel}
+                </span>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  // ── Render ───────────────────────────────────────────────────────────────
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: hideControls ? "20px 0 0" : "60px 0 30px", perspective: "1000px", userSelect: "none" }}>
+    <div className="flex flex-col items-center select-none" style={{ padding: '60px 0 30px', perspective: '1000px' }}>
       <style>{`
         @keyframes rotatebox {
           0%   { transform: rotateX(-22deg) rotateY(0deg); }
@@ -234,48 +165,45 @@ export default function WoodenBox({
       {/* Box */}
       <div
         ref={wrapRef}
-        className="wb-wrap"
-        style={{ width: size, height: size, position: "relative" }}
+        className="wb-wrap relative"
+        style={{ width: size, height: size }}
       >
-        <Face transform={`translateZ(${half}px)`}        texture={grainH}               withMid withLatch withLogo withBolts />
-        <Face transform={`rotateY(180deg) translateZ(${half}px)`} texture={grainH} brightness={0.75} withMid />
-        <Face transform={`rotateY(-90deg) translateZ(${half}px)`} texture={grainV} brightness={0.58} withMid />
-        <Face transform={`rotateY(90deg) translateZ(${half}px)`}  texture={grainV} brightness={0.75} withMid />
-        <Face transform={`rotateX(90deg) translateZ(${half}px)`}  texture={grainV} brightness={1.12} />
-        <Face transform={`rotateX(-90deg) translateZ(${half}px)`} texture={grainV} brightness={0.58} />
+        <Face transform={`translateZ(${sz.half}px)`}         texture="H" withMid withLatch withLogo withBolts />
+        <Face transform={`rotateY(180deg) translateZ(${sz.half}px)`} texture="H" brightness={0.75} withMid />
+        <Face transform={`rotateY(-90deg) translateZ(${sz.half}px)`} texture="V" brightness={0.58} withMid />
+        <Face transform={`rotateY(90deg) translateZ(${sz.half}px)`}  texture="V" brightness={0.75} withMid />
+        <Face transform={`rotateX(90deg) translateZ(${sz.half}px)`}  texture="V" brightness={1.12} />
+        <Face transform={`rotateX(-90deg) translateZ(${sz.half}px)`} texture="V" brightness={0.58} />
       </div>
 
       {/* Shadow */}
       <div
-        className="wb-shadow"
+        className="wb-shadow rounded-full"
         style={{
           width: size * 1.2,
           height: 18,
-          background: "rgba(0,0,0,0.15)",
-          borderRadius: "50%",
+          background: 'rgba(0,0,0,0.15)',
           marginTop: 24,
         }}
       />
 
       {/* Controls */}
-      {!hideControls && (
-        <div style={{ display: "flex", gap: 12, marginTop: 20, alignItems: "center", fontFamily: "Arial, sans-serif" }}>
-          <button
-            onClick={() => setPaused(p => !p)}
-            style={{ padding: "7px 18px", fontSize: 13, border: "1px solid #ccc", borderRadius: 6, background: "#fff", cursor: "pointer", color: "#333" }}
-          >
-            {paused ? "▶ Play" : "⏸ Pause"}
-          </button>
-          <span style={{ fontSize: 13, color: "#666" }}>Speed:</span>
-          <input
-            type="range" min={2} max={20} step={1}
-            value={currentSpeed}
-            onChange={e => setCurrentSpeed(Number(e.target.value))}
-            style={{ width: 110 }}
-          />
-          <span style={{ fontSize: 13, color: "#666", minWidth: 28 }}>{currentSpeed}s</span>
-        </div>
-      )}
+      <div className="flex items-center gap-3 mt-5 font-sans">
+        <button
+          onClick={() => setPaused(p => !p)}
+          className="px-[18px] py-[7px] text-[13px] border border-[#ccc] rounded-md bg-white cursor-pointer text-[#333] hover:bg-gray-100 active:bg-gray-200 transition-colors"
+        >
+          {paused ? '▶ Play' : '⏸ Pause'}
+        </button>
+        <span className="text-[13px] text-[#666]">Speed:</span>
+        <input
+          type="range" min={2} max={20} step={1}
+          value={currentSpeed}
+          onChange={e => setCurrentSpeed(Number(e.target.value))}
+          className="w-[110px]"
+        />
+        <span className="text-[13px] text-[#666] min-w-[28px]">{currentSpeed}s</span>
+      </div>
     </div>
   );
 }

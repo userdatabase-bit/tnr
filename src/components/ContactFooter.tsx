@@ -6,7 +6,7 @@ import {
   MapPin, Linkedin, Instagram, Facebook,
 } from 'lucide-react';
 import {
-  WHATSAPP_NUMBER, PHONE_PRIMARY, PHONE_ALTERNATE, EMAIL,
+  WHATSAPP_NUMBER, PHONE_PRIMARY, EMAIL,
   ADDRESS_LINE1, ADDRESS_LINE2, GST_NUMBER, COMPANY_NAME,
   SOCIAL_LINKEDIN, SOCIAL_INSTAGRAM, SOCIAL_FACEBOOK,
 } from '../constants';
@@ -418,17 +418,6 @@ export default function ContactFooter() {
               </div>
               <span className="font-body text-white/40 text-[10px] tracking-wider uppercase">Primary</span>
               <span className="font-heading font-semibold text-white text-xs">{PHONE_PRIMARY}</span>
-            </a>
-
-            <a
-              href={`tel:${PHONE_ALTERNATE.replace(/\s/g, '')}`}
-              className="flex flex-col items-center gap-2.5 p-5 rounded-xl bg-white/[0.06] border border-white/10 hover:bg-white/[0.12] hover:border-white/20 transition-all text-center group"
-            >
-              <div className="w-10 h-10 rounded-xl bg-orange/15 flex items-center justify-center group-hover:bg-orange/25 transition-colors">
-                <Phone className="w-4 h-4 text-orange-light" />
-              </div>
-              <span className="font-body text-white/40 text-[10px] tracking-wider uppercase">Alternate</span>
-              <span className="font-heading font-semibold text-white text-xs">{PHONE_ALTERNATE}</span>
             </a>
 
             <a

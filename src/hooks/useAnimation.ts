@@ -100,4 +100,4 @@ export const fadeIn = {
 
 // ─── Type ───────────────────────────────────────────────────────────────────
 
-export type { Variants, Transition, AnimationProps } from 'framer-motion';
+export type { Variants, Transition, MotionProps } from 'framer-motion';

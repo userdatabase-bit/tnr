@@ -14,8 +14,6 @@ interface PalletSpec {
 interface Pallet {
   id: number;
   name: string;
-  price: string;
-  priceUnit: string;
   image: string;
   badge?: string;
   specs: PalletSpec[];
@@ -31,8 +29,6 @@ const pallets: Pallet[] = [
   {
     id: 1,
     name: "Two Ways Wooden Pallet",
-    price: "₹400",
-    priceUnit: "per Pallet",
     image: "https://cpimg.tistatic.com/06000038/b/4/Two-Ways-Wooden-Pallet.jpg",
     badge: "Popular",
     description:
@@ -53,8 +49,6 @@ const pallets: Pallet[] = [
   {
     id: 2,
     name: "Warehouse Wooden Pallets",
-    price: "₹400",
-    priceUnit: "per Pallet",
     image: "https://cpimg.tistatic.com/06000041/b/4/Warehouse-Wooden-Pallets.jpg",
     description:
       "Euro-style double-faced wooden pallets designed specifically for warehouse storage and racking systems. Built to withstand heavy stacking loads.",
@@ -71,8 +65,6 @@ const pallets: Pallet[] = [
   {
     id: 3,
     name: "Heavy Duty Pallets",
-    price: "₹400",
-    priceUnit: "per Pallet",
     image: "https://cpimg.tistatic.com/06000040/b/4/Heavy-Duty-Pallets.jpg",
     badge: "Best Seller",
     description:
@@ -92,8 +84,6 @@ const pallets: Pallet[] = [
   {
     id: 4,
     name: "Industrial Heat Treated Wooden Pallets",
-    price: "₹400",
-    priceUnit: "per Pallet",
     image: "https://cpimg.tistatic.com/06000039/b/4/Industrial-Heat-Treated-Wooden-Pallets.jpg",
     badge: "Export Ready",
     description:
@@ -113,8 +103,6 @@ const pallets: Pallet[] = [
   {
     id: 5,
     name: "Pinewood Pallet",
-    price: "₹50",
-    priceUnit: "per Pallet",
     image: "https://cpimg.tistatic.com/06000043/b/4/Pinewood-Pallet.jpg",
     description:
       "Lightweight pinewood pallets with collar pallet design. Double-faced and cost-effective for light-to-medium load applications in retail and storage.",
@@ -131,8 +119,6 @@ const pallets: Pallet[] = [
   {
     id: 6,
     name: "Hardwood Industrial Wooden Pallets",
-    price: "₹400",
-    priceUnit: "per Pallet",
     image: "https://cpimg.tistatic.com/06000042/b/4/Hardwood-Industrial-Wooden-Pallets.jpg",
     badge: "Heavy Load",
     description:
@@ -152,8 +138,6 @@ const pallets: Pallet[] = [
   {
     id: 7,
     name: "Four Way Wooden Pallets",
-    price: "₹350",
-    priceUnit: "per Piece",
     image: "https://cpimg.tistatic.com/05845820/b/4/Four-Way-Wooden-Pallets.jpg",
     description:
       "Versatile 4-way entry pallets allowing forklift access from all four sides for maximum handling flexibility on busy warehouse floors.",
@@ -170,8 +154,6 @@ const pallets: Pallet[] = [
   {
     id: 8,
     name: "Heavy Duty Wooden Pallets",
-    price: "₹350",
-    priceUnit: "per Piece",
     image: "https://cpimg.tistatic.com/05845818/b/4/Heavy-Duty-Wooden-Pallets.jpg",
     badge: "High Volume",
     description:
@@ -191,8 +173,6 @@ const pallets: Pallet[] = [
   {
     id: 9,
     name: "Commercial Wooden Pallets",
-    price: "₹350",
-    priceUnit: "per Piece",
     image: "https://cpimg.tistatic.com/05845819/b/4/Commercial-Wooden-Pallets.jpg",
     description:
       "Double-faced commercial pallets designed for retail distribution and supply chains. Customizable dimensions to fit specific logistics needs.",
@@ -212,8 +192,6 @@ const pallets: Pallet[] = [
   {
     id: 10,
     name: "Customized Wooden Pallets",
-    price: "₹350",
-    priceUnit: "per Piece",
     image: "https://cpimg.tistatic.com/04943343/b/4/Customized-Wooden-Pallets.jpg",
     badge: "Custom",
     description:
@@ -439,11 +417,7 @@ function PalletCard({
           >
             {pallet.badge}
           </span>
-        )}
-        <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-lg px-2.5 py-1">
-          <span className="text-[#1B2A5E] font-bold text-sm">{pallet.price}</span>
-          <span className="text-gray-400 text-xs ml-1">{pallet.priceUnit}</span>
-        </div>
+        )        }
       </div>
 
       {/* Content */}
@@ -553,13 +527,7 @@ function DetailModal({
           </div>
 
           <div className="p-6">
-            <div className="flex items-start justify-between mb-3">
-              <h2 className="text-2xl font-bold text-gray-900 leading-tight">{pallet.name}</h2>
-              <div className="text-right ml-4 shrink-0">
-                <p className="text-2xl font-bold text-[#1B2A5E]">{pallet.price}</p>
-                <p className="text-xs text-gray-400">{pallet.priceUnit}</p>
-              </div>
-            </div>
+            <h2 className="text-2xl font-bold text-gray-900 leading-tight mb-3">{pallet.name}</h2>
 
             <p className="text-gray-600 text-sm leading-relaxed mb-6">{pallet.description}</p>
 

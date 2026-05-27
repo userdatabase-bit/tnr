@@ -11,7 +11,7 @@ export const EMAIL            = 'info@tnrsolutions.co.in';
 export const WHATSAPP_NUMBER  = '919999640071'; // country code + number, no + or spaces
 
 // Address / Business details
-export const ADDRESS_LINE1 = 'Ecotech III, Greater Noida';
+export const ADDRESS_LINE1 = 'Site C Surajpur Industrial Area Greater Noida';
 export const ADDRESS_LINE2 = 'Uttar Pradesh – 201306, India';
 export const GST_NUMBER    = 'GSTIN: 09CDSPS1891J3ZJ';
 export const COMPANY_NAME  = 'TNR Solutions Pvt. Ltd.';

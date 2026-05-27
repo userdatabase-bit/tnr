@@ -19,6 +19,7 @@ const Testimonials     = lazy(() => import('./components/Testimonials'));
 const WoodenPalletsPreview = lazy(() => import('./components/WoodenPalletsPreview'));
 const Stats            = lazy(() => import('./components/Stats'));
 const ServiceMap       = lazy(() => import('./components/ServiceMap'));
+const LocationMap      = lazy(() => import('./components/LocationMap'));
 const ContactFooter    = lazy(() => import('./components/ContactFooter'));
 
 // ── Section loader placeholder ───────────────────────────────────────────────
@@ -106,6 +107,7 @@ export default function App() {
           <Stats />
           <WaveDivider color="#F5F6F8" />
           <ServiceMap />
+          <LocationMap />
           <ContactFooter />
         </Suspense>
       </main>

@@ -547,7 +547,6 @@ export default function ContactFooter() {
             <div>
               <h4 className="font-heading font-bold text-white text-sm tracking-wider mb-5">BUSINESS INFO</h4>
               <p className="font-body text-white/40 text-xs mb-2">{GST_NUMBER}</p>
-              <p className="font-body text-white/40 text-xs mb-5">CIN: U74999UP2009PTC123456</p>
               <div className="p-4 rounded-xl bg-white/[0.05] border border-white/10">
                 <p className="font-heading font-semibold text-white/70 text-xs tracking-wider mb-1">WORKING HOURS</p>
                 <p className="font-body text-white/50 text-xs">Mon – Sat: 9:00 AM – 6:00 PM</p>

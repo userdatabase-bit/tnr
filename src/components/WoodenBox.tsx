@@ -94,7 +94,7 @@ export default function WoodenBox({
 
     return (
       <div
-        className="absolute overflow-hidden"
+        className="absolute overflow-hidden top-0 left-0"
         style={{ width: w, height: h, transform }}
       >
         <div
@@ -180,7 +180,7 @@ export default function WoodenBox({
 
   // ── Render ───────────────────────────────────────────────────────────────
   return (
-    <div className="flex flex-col items-center select-none" style={{ padding: '60px 0 30px', perspective: '1000px' }}>
+    <div className="flex flex-col items-center select-none w-full mx-auto justify-center" style={{ padding: '60px 0 30px', perspective: '1000px' }}>
       <style>{`
         @keyframes rotatebox {
           0%   { transform: rotateX(-22deg) rotateY(0deg); }
@@ -201,50 +201,53 @@ export default function WoodenBox({
         }
       `}</style>
 
-      {/* Box / Pallet */}
-      <div
-        ref={wrapRef}
-        className="wb-wrap relative"
-        style={palletMode ? { width: palletWidth, height: palletHeight } : { width: size, height: size }}
-      >
-        {palletMode ? (
-          <>
-            {/* Pallet faces — flat rectangular shape */}
-            <Face transform={`translateZ(${halfD}px)`}                texture="H" faceWidth={palletWidth} faceHeight={palletHeight} />
-            <Face transform={`rotateY(180deg) translateZ(${halfD}px)`} texture="H" faceWidth={palletWidth} faceHeight={palletHeight} brightness={0.75} />
-            <Face transform={`rotateY(-90deg) translateZ(${halfW}px)`} texture="V" faceWidth={palletDepth} faceHeight={palletHeight} brightness={0.58} />
-            <Face transform={`rotateY(90deg) translateZ(${halfW}px)`}  texture="V" faceWidth={palletDepth} faceHeight={palletHeight} brightness={0.75} />
-            {/* Top face with slat lines */}
-            <Face transform={`rotateX(90deg) translateZ(${halfH}px)`}  texture="H" faceWidth={palletWidth} faceHeight={palletDepth} brightness={1.12} withSlats />
-            <Face transform={`rotateX(-90deg) translateZ(${halfH}px)`} texture="H" faceWidth={palletWidth} faceHeight={palletDepth} brightness={0.58} />
-          </>
-        ) : (
-          <>
-            {/* Original box faces */}
-            <Face transform={`translateZ(${sz.half}px)`}         texture="H" withMid withLatch withLogo withBolts />
-            <Face transform={`rotateY(180deg) translateZ(${sz.half}px)`} texture="H" brightness={0.75} withMid />
-            <Face transform={`rotateY(-90deg) translateZ(${sz.half}px)`} texture="V" brightness={0.58} withMid />
-            <Face transform={`rotateY(90deg) translateZ(${sz.half}px)`}  texture="V" brightness={0.75} withMid />
-            <Face transform={`rotateX(90deg) translateZ(${sz.half}px)`}  texture="V" brightness={1.12} />
-            <Face transform={`rotateX(-90deg) translateZ(${sz.half}px)`} texture="V" brightness={0.58} />
-          </>
-        )}
+      {/* 3D Viewport Wrapper ensuring strict centering flex bounds */}
+      <div className="flex items-center justify-center" style={{ width: palletWidth, height: size, marginBottom: '20px' }}>
+        {/* Box / Pallet */}
+        <div
+          ref={wrapRef}
+          className="wb-wrap relative"
+          style={palletMode ? { width: palletWidth, height: palletHeight } : { width: size, height: size }}
+        >
+          {palletMode ? (
+            <>
+              {/* Pallet faces — flat rectangular shape */}
+              <Face transform={`translateZ(${halfD}px)`}                texture="H" faceWidth={palletWidth} faceHeight={palletHeight} />
+              <Face transform={`rotateY(180deg) translateZ(${halfD}px)`} texture="H" faceWidth={palletWidth} faceHeight={palletHeight} brightness={0.75} />
+              <Face transform={`rotateY(-90deg) translateZ(${halfW}px) translateX(-${(palletWidth - palletDepth) / 2}px)`} texture="V" faceWidth={palletDepth} faceHeight={palletHeight} brightness={0.58} />
+              <Face transform={`rotateY(90deg) translateZ(${halfW}px) translateX(${(palletWidth - palletDepth) / 2}px)`}  texture="V" faceWidth={palletDepth} faceHeight={palletHeight} brightness={0.75} />
+              {/* Top face with slat lines */}
+              <Face transform={`rotateX(90deg) translateZ(${halfH}px) translateY(${(palletWidth - palletDepth) / 2}px)`}  texture="H" faceWidth={palletWidth} faceHeight={palletDepth} brightness={1.12} withSlats />
+              <Face transform={`rotateX(-90deg) translateZ(${halfH}px) translateY(-${(palletWidth - palletDepth) / 2}px)`} texture="H" faceWidth={palletWidth} faceHeight={palletDepth} brightness={0.58} />
+            </>
+          ) : (
+            <>
+              {/* Original box faces */}
+              <Face transform={`translateZ(${sz.half}px)`}         texture="H" withMid withLatch withLogo withBolts />
+              <Face transform={`rotateY(180deg) translateZ(${sz.half}px)`} texture="H" brightness={0.75} withMid />
+              <Face transform={`rotateY(-90deg) translateZ(${sz.half}px)`} texture="V" brightness={0.58} withMid />
+              <Face transform={`rotateY(90deg) translateZ(${sz.half}px)`}  texture="V" brightness={0.75} withMid />
+              <Face transform={`rotateX(90deg) translateZ(${sz.half}px)`}  texture="V" brightness={1.12} />
+              <Face transform={`rotateX(-90deg) translateZ(${sz.half}px)`} texture="V" brightness={0.58} />
+            </>
+          )}
+        </div>
       </div>
 
       {/* Shadow */}
       <div
-        className="wb-shadow rounded-full"
+        className="wb-shadow rounded-full mx-auto"
         style={{
-          width: palletMode ? palletWidth * 1.2 : size * 1.2,
+          width: palletMode ? palletWidth * 1.1 : size * 1.1,
           height: palletMode ? 10 : 18,
           background: 'rgba(0,0,0,0.15)',
-          marginTop: palletMode ? 12 : 24,
+          marginTop: '10px',
         }}
       />
 
       {/* Controls (hidden in pallet mode or when hideControls is true) */}
       {!hideControls && !palletMode && (
-        <div className="flex items-center gap-3 mt-5 font-sans">
+        <div className="flex items-center gap-3 mt-5 font-sans justify-center">
           <button
             onClick={() => setPaused(p => !p)}
             className="px-[18px] py-[7px] text-[13px] border border-[#ccc] rounded-md bg-white cursor-pointer text-[#333] hover:bg-gray-100 active:bg-gray-200 transition-colors"

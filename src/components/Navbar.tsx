@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 
+// Reconfigured to exactly match your requested text labels and order structure
 const navLinks = [
-  { label: 'Products',     href: '/products/wooden-pallets', isRouterLink: true },
-  { label: 'Wooden Boxes', href: '/#wooden', isRouterLink: true },
-  { label: 'Corrugated',   href: '/#corrugated', isRouterLink: true },
-  { label: 'Pallets',      href: '/#pallets', isRouterLink: true },
-  { label: 'Printing',     href: '/#printing', isRouterLink: true },
+  { label: 'Products',         href: '/products/wooden-pallets' },
+  { label: 'Corrugated box',   href: '/#corrugated' },
+  { label: 'Wooden pallets',   href: '/products/wooden-pallets' },
+  { label: 'Wooden boxes',     href: '/#wooden' },
+  { label: 'Printing',         href: '/#printing' },
 ];
 
 export default function Navbar() {
@@ -22,7 +23,7 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Close mobile menu on outside tap/click (#11)
+  // Close mobile menu on outside tap/click
   useEffect(() => {
     if (!mobileOpen) return;
 
@@ -70,27 +71,17 @@ export default function Navbar() {
 
         {/* Desktop Links */}
         <div className="hidden lg:flex items-center gap-8">
-          {navLinks.map((link) =>
-            link.isRouterLink ? (
-              <Link
-                key={link.href}
-                to={link.href}
-                className="relative text-white/80 hover:text-white font-body text-sm font-medium tracking-wide transition-colors group"
-              >
-                {link.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange group-hover:w-full transition-all duration-300" />
-              </Link>
-            ) : (
-              <a
-                key={link.href}
-                href={link.href}
-                className="relative text-white/80 hover:text-white font-body text-sm font-medium tracking-wide transition-colors group"
-              >
-                {link.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange group-hover:w-full transition-all duration-300" />
-              </a>
-            )
-          )}
+          {navLinks.map((link) => (
+            <Link
+              key={link.label + link.href}
+              to={link.href}
+              className="relative text-white/80 hover:text-white font-body text-sm font-medium tracking-wide transition-colors group"
+            >
+              {link.label}
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange group-hover:w-full transition-all duration-300" />
+            </Link>
+          ))}
+          {/* Standardized "Get a Quote" CTA action layout element */}
           <Link
             to="/#contact"
             className="ml-4 px-6 py-2.5 bg-orange hover:bg-orange-light text-white font-heading font-semibold text-sm rounded-full transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(232,130,26,0.4)]"
@@ -123,27 +114,16 @@ export default function Navbar() {
             className="lg:hidden bg-navy-dark/95 backdrop-blur-xl border-t border-white/10 overflow-hidden"
           >
             <div className="px-6 py-6 flex flex-col gap-4">
-              {navLinks.map((link) =>
-                link.isRouterLink ? (
-                  <Link
-                    key={link.href}
-                    to={link.href}
-                    onClick={() => setMobileOpen(false)}
-                    className="text-white/80 hover:text-orange font-body text-base font-medium transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                ) : (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setMobileOpen(false)}
-                    className="text-white/80 hover:text-orange font-body text-base font-medium transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                )
-              )}
+              {navLinks.map((link) => (
+                <Link
+                  key={'mobile-' + link.label}
+                  to={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  className="text-white/80 hover:text-orange font-body text-base font-medium transition-colors"
+                >
+                  {link.label}
+                </Link>
+              ))}
               <Link
                 to="/#contact"
                 onClick={() => setMobileOpen(false)}

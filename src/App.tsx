@@ -7,16 +7,16 @@ import { WaveDivider, AngledDivider } from './components/Dividers';
 
 // ── Eagerly loaded (above fold or tiny) ──────────────────────────────────────
 import TrustMarquee from './components/TrustMarquee';
-import WoodenBoxes from './components/WoodenBoxes';
 
 // ── Lazily loaded (below fold / heavy) ──────────────────────────────────────
 const CorrugatedBoxes  = lazy(() => import('./components/CorrugatedBoxes'));
 const Pallets          = lazy(() => import('./components/Pallets'));
+const WoodenPalletsPreview = lazy(() => import('./components/WoodenPalletsPreview'));
+const WoodenBoxes      = lazy(() => import('./components/WoodenBoxes')); // Moved to lazy-load for better initial load times
 const DigitalPrinting  = lazy(() => import('./components/DigitalPrinting'));
 const Process          = lazy(() => import('./components/Process'));
 const BrandPillars     = lazy(() => import('./components/BrandPillars'));
 const Testimonials     = lazy(() => import('./components/Testimonials'));
-const WoodenPalletsPreview = lazy(() => import('./components/WoodenPalletsPreview'));
 const Stats            = lazy(() => import('./components/Stats'));
 const ServiceMap       = lazy(() => import('./components/ServiceMap'));
 const LocationMap      = lazy(() => import('./components/LocationMap'));
@@ -80,26 +80,36 @@ export default function App() {
           })}
         </script>
       </Helmet>
+      
       <div className="relative">
       <Navbar />
       <main>
         {/* Eagerly rendered — above fold */}
         <Hero />
         <TrustMarquee />
-        <WaveDivider color="#F5F6F8" />
-        <WoodenBoxes />
 
         {/* Lazily rendered — below fold */}
         <Suspense fallback={<SectionSkeleton />}>
-          <WaveDivider flip color="#F5F6F8" />
+          {/* 1. CORRUGATED BOXES (Moved up right below above-fold elements) */}
+          <WaveDivider color="#FFFFFF" /> 
           <CorrugatedBoxes />
+          
+          {/* 2. WOODEN PALLETS & PREVIEW (Keep together for layout flow consistency) */}
           <AngledDivider color="#0F1A3D" />
           <Pallets />
           <WaveDivider color="#F5F6F8" />
           <WoodenPalletsPreview />
+          
+          {/* 3. WOODEN BOXES (Moved down below the 3D Pallet Showcase) */}
+          <WaveDivider flip color="#F5F6F8" />
+          <WoodenBoxes />
+          
+          {/* 4. DIGITAL PRINTING & MANUFACTURING PROCESS */}
           <WaveDivider flip color="#F5F6F8" />
           <DigitalPrinting />
           <Process />
+          
+          {/* 5. BRAND VALUE, STATS, MAPS & FOOTER CONTACT FORM */}
           <WaveDivider flip color="#FFFFFF" />
           <BrandPillars />
           <Testimonials />

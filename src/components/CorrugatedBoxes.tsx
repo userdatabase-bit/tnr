@@ -3,9 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { gsap } from '../hooks/useScrollAnimation';
 import { useParallax, useParallaxDrift } from '../hooks/useScrollAnimation';
 import { ArrowRight } from 'lucide-react';
-import AnimatedBox from './AnimatedBox';
-
-// ScrollTrigger registered once in main.tsx
+// 1. Import the new dynamic 3D component
+import { CorrugatedBox3D } from './CorrugatedBox3D'; 
 
 const boxSizes = [
   { id: 'small', label: 'S', name: 'Small', dims: '200 × 150 × 100 mm' },
@@ -122,9 +121,11 @@ export default function CorrugatedBoxes() {
               </motion.div>
             </AnimatePresence>
 
-            {/* 3D Animated Box */}
+            {/* 3D Animated Box Integration */}
             <div className="relative flex items-center justify-center min-h-[260px] md:min-h-[400px]">
-              <AnimatedBox size={sizeScale[activeSize] ?? 1} className="w-full h-full" />
+              {/* 2. Swapped old placeholder component out for the live interactive 3D box scene */}
+              <CorrugatedBox3D activeScale={sizeScale[activeSize] ?? 1} />
+              
               <div className="absolute w-80 h-80 sm:w-96 sm:h-96 bg-orange/5 rounded-full blur-3xl -z-10" />
               <div className="absolute w-48 h-48 bg-navy/5 rounded-full blur-2xl top-10 -left-10 -z-10" />
             </div>

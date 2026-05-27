@@ -17,6 +17,10 @@ interface WoodenBoxProps {
   size?: number;
   /** Wood base color hex */
   woodColor?: string;
+  /** When true, renders a flat pallet shape (wide, shallow, no latch/logo, with slats) */
+  palletMode?: boolean;
+  /** When true, hides the play/pause and speed controls */
+  hideControls?: boolean;
 }
 
 export default function WoodenBox({
@@ -25,12 +29,22 @@ export default function WoodenBox({
   subLabel = 'SOLUTIONS',
   size = 200,
   woodColor = '#C9884C',
+  palletMode = false,
+  hideControls = false,
 }: WoodenBoxProps) {
   const [paused, setPaused] = useState(false);
   const [currentSpeed, setCurrentSpeed] = useState(speed);
   const wrapRef = useRef<HTMLDivElement>(null);
 
   const sz = getBoxStyles(size, woodColor);
+
+  // ── Pallet dimensions ────────────────────────────────────────────────────
+  const palletWidth  = size * 1.8;
+  const palletDepth  = size * 1.2;
+  const palletHeight = size * 0.25;
+  const halfW = palletWidth  / 2;
+  const halfD = palletDepth  / 2;
+  const halfH = palletHeight / 2;
 
   useEffect(() => {
     if (wrapRef.current) {
@@ -59,6 +73,9 @@ export default function WoodenBox({
     withLatch,
     withLogo,
     withBolts,
+    withSlats,
+    faceWidth,
+    faceHeight,
   }: {
     transform: string;
     texture: 'H' | 'V';
@@ -67,13 +84,18 @@ export default function WoodenBox({
     withLatch?: boolean;
     withLogo?: boolean;
     withBolts?: boolean;
+    withSlats?: boolean;
+    faceWidth?: number;
+    faceHeight?: number;
   }) {
+    const w = faceWidth ?? size;
+    const h = faceHeight ?? size;
     const bg = faceTextures[texture];
 
     return (
       <div
         className="absolute overflow-hidden"
-        style={{ width: size, height: size, transform }}
+        style={{ width: w, height: h, transform }}
       >
         <div
           className="relative w-full h-full"
@@ -134,6 +156,23 @@ export default function WoodenBox({
               )}
             </div>
           )}
+
+          {/* Pallet slats (horizontal plank lines on top face) */}
+          {withSlats && (
+            <div className="absolute inset-0 z-10 pointer-events-none flex flex-col items-center justify-around px-1">
+              {[0, 1, 2, 3, 4, 5].map(i => (
+                <div
+                  key={i}
+                  className="w-full rounded-sm"
+                  style={{
+                    height: `${100 / 14}%`,
+                    background: 'linear-gradient(90deg, rgba(0,0,0,0.06), rgba(0,0,0,0.14) 20%, rgba(0,0,0,0.14) 80%, rgba(0,0,0,0.06))',
+                    borderBottom: '1px solid rgba(0,0,0,0.06)',
+                  }}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     );
@@ -162,48 +201,66 @@ export default function WoodenBox({
         }
       `}</style>
 
-      {/* Box */}
+      {/* Box / Pallet */}
       <div
         ref={wrapRef}
         className="wb-wrap relative"
-        style={{ width: size, height: size }}
+        style={palletMode ? { width: palletWidth, height: palletHeight } : { width: size, height: size }}
       >
-        <Face transform={`translateZ(${sz.half}px)`}         texture="H" withMid withLatch withLogo withBolts />
-        <Face transform={`rotateY(180deg) translateZ(${sz.half}px)`} texture="H" brightness={0.75} withMid />
-        <Face transform={`rotateY(-90deg) translateZ(${sz.half}px)`} texture="V" brightness={0.58} withMid />
-        <Face transform={`rotateY(90deg) translateZ(${sz.half}px)`}  texture="V" brightness={0.75} withMid />
-        <Face transform={`rotateX(90deg) translateZ(${sz.half}px)`}  texture="V" brightness={1.12} />
-        <Face transform={`rotateX(-90deg) translateZ(${sz.half}px)`} texture="V" brightness={0.58} />
+        {palletMode ? (
+          <>
+            {/* Pallet faces — flat rectangular shape */}
+            <Face transform={`translateZ(${halfD}px)`}                texture="H" faceWidth={palletWidth} faceHeight={palletHeight} />
+            <Face transform={`rotateY(180deg) translateZ(${halfD}px)`} texture="H" faceWidth={palletWidth} faceHeight={palletHeight} brightness={0.75} />
+            <Face transform={`rotateY(-90deg) translateZ(${halfW}px)`} texture="V" faceWidth={palletDepth} faceHeight={palletHeight} brightness={0.58} />
+            <Face transform={`rotateY(90deg) translateZ(${halfW}px)`}  texture="V" faceWidth={palletDepth} faceHeight={palletHeight} brightness={0.75} />
+            {/* Top face with slat lines */}
+            <Face transform={`rotateX(90deg) translateZ(${halfH}px)`}  texture="H" faceWidth={palletWidth} faceHeight={palletDepth} brightness={1.12} withSlats />
+            <Face transform={`rotateX(-90deg) translateZ(${halfH}px)`} texture="H" faceWidth={palletWidth} faceHeight={palletDepth} brightness={0.58} />
+          </>
+        ) : (
+          <>
+            {/* Original box faces */}
+            <Face transform={`translateZ(${sz.half}px)`}         texture="H" withMid withLatch withLogo withBolts />
+            <Face transform={`rotateY(180deg) translateZ(${sz.half}px)`} texture="H" brightness={0.75} withMid />
+            <Face transform={`rotateY(-90deg) translateZ(${sz.half}px)`} texture="V" brightness={0.58} withMid />
+            <Face transform={`rotateY(90deg) translateZ(${sz.half}px)`}  texture="V" brightness={0.75} withMid />
+            <Face transform={`rotateX(90deg) translateZ(${sz.half}px)`}  texture="V" brightness={1.12} />
+            <Face transform={`rotateX(-90deg) translateZ(${sz.half}px)`} texture="V" brightness={0.58} />
+          </>
+        )}
       </div>
 
       {/* Shadow */}
       <div
         className="wb-shadow rounded-full"
         style={{
-          width: size * 1.2,
-          height: 18,
+          width: palletMode ? palletWidth * 1.2 : size * 1.2,
+          height: palletMode ? 10 : 18,
           background: 'rgba(0,0,0,0.15)',
-          marginTop: 24,
+          marginTop: palletMode ? 12 : 24,
         }}
       />
 
-      {/* Controls */}
-      <div className="flex items-center gap-3 mt-5 font-sans">
-        <button
-          onClick={() => setPaused(p => !p)}
-          className="px-[18px] py-[7px] text-[13px] border border-[#ccc] rounded-md bg-white cursor-pointer text-[#333] hover:bg-gray-100 active:bg-gray-200 transition-colors"
-        >
-          {paused ? '▶ Play' : '⏸ Pause'}
-        </button>
-        <span className="text-[13px] text-[#666]">Speed:</span>
-        <input
-          type="range" min={2} max={20} step={1}
-          value={currentSpeed}
-          onChange={e => setCurrentSpeed(Number(e.target.value))}
-          className="w-[110px]"
-        />
-        <span className="text-[13px] text-[#666] min-w-[28px]">{currentSpeed}s</span>
-      </div>
+      {/* Controls (hidden in pallet mode or when hideControls is true) */}
+      {!hideControls && !palletMode && (
+        <div className="flex items-center gap-3 mt-5 font-sans">
+          <button
+            onClick={() => setPaused(p => !p)}
+            className="px-[18px] py-[7px] text-[13px] border border-[#ccc] rounded-md bg-white cursor-pointer text-[#333] hover:bg-gray-100 active:bg-gray-200 transition-colors"
+          >
+            {paused ? '▶ Play' : '⏸ Pause'}
+          </button>
+          <span className="text-[13px] text-[#666]">Speed:</span>
+          <input
+            type="range" min={2} max={20} step={1}
+            value={currentSpeed}
+            onChange={e => setCurrentSpeed(Number(e.target.value))}
+            className="w-[110px]"
+          />
+          <span className="text-[13px] text-[#666] min-w-[28px]">{currentSpeed}s</span>
+        </div>
+      )}
     </div>
   );
 }

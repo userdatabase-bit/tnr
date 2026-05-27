@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { inject } from '@vercel/analytics'; // 1. Add this import
 import './index.css';
 import App from './App.tsx';
 import NotFound from './pages/NotFound';
@@ -15,6 +16,9 @@ import GlobalUI from './components/GlobalUI';
 
 // Register GSAP plugins once at app entry — avoids repeated registerPlugin() calls in components
 gsap.registerPlugin(ScrollTrigger);
+
+// 2. Initialize Vercel Analytics tracking
+inject();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -34,4 +38,3 @@ createRoot(document.getElementById('root')!).render(
     </HelmetProvider>
   </StrictMode>,
 );
-

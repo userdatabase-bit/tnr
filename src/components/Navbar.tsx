@@ -3,44 +3,62 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 
-// Reconfigured to exactly match your requested text labels and order structure
+
 const navLinks = [
-  { label: 'Products',           href: '/products' },
-  { label: 'Corrugated box',     href: '/#corrugated' },
-  { label: 'Wooden pallets',     href: '/#pallets' },
-  { label: 'Wooden box',         href: '/#wooden' },
-  { label: 'Printing',           href: '/#printing' },
+  { label: 'Products',       href: '/products' },
+  { label: 'Corrugated box', href: '/products/corrugated-boxes' },
+  { label: 'Wooden pallets', href: '/products/wooden-pallets' },
+  { label: 'Wooden box',     href: '/#wooden' },
+  { label: 'Printing',       href: '/#printing' },
 ];
 
-export default function Navbar({ scrolled: startScrolled = false }: { scrolled?: boolean }) {
-  const [scrolled,    setScrolled]    = useState(startScrolled);
-  const [mobileOpen,  setMobileOpen]  = useState(false);
+export default function Navbar({ scrolled: forceScrolled = false }: { scrolled?: boolean }) {
+  const [scrolled,   setScrolled]   = useState(forceScrolled);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // If parent forces scrolled (inner pages like Products), lock it — never reset
+    if (forceScrolled) return;
     const onScroll = () => setScrolled(window.scrollY > 60);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  }, [forceScrolled]);
 
-  // Close mobile menu on outside tap/click
   useEffect(() => {
     if (!mobileOpen) return;
-
     const handleOutside = (e: MouseEvent | TouchEvent) => {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
         setMobileOpen(false);
       }
     };
-
     document.addEventListener('mousedown', handleOutside);
     document.addEventListener('touchstart', handleOutside, { passive: true });
-
     return () => {
       document.removeEventListener('mousedown', handleOutside);
       document.removeEventListener('touchstart', handleOutside);
     };
   }, [mobileOpen]);
+
+  // 3 states:
+  // scrolled=true              → navy bg     → white text ✓
+  // forceScrolled + !scrolled  → transparent over light page → navy text ✓
+  // !forceScrolled + !scrolled → transparent over dark hero  → white text ✓
+  const linkClass = scrolled
+    ? 'text-white/80 hover:text-white'
+    : forceScrolled
+      ? 'text-navy/70 hover:text-navy'
+      : 'text-white/80 hover:text-white';
+
+  const logoTextClass = scrolled
+    ? 'text-white'
+    : forceScrolled
+      ? 'text-navy'
+      : 'text-white';
+
+  const mobileToggleClass = (!scrolled && forceScrolled)
+    ? 'text-navy hover:bg-navy/10'
+    : 'text-white hover:bg-white/10';
 
   return (
     <motion.nav
@@ -56,15 +74,19 @@ export default function Navbar({ scrolled: startScrolled = false }: { scrolled?:
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
-        <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center gap-3 group">
+        <Link
+          to="/"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="flex items-center gap-3 group"
+        >
           <img
             src="/images/logo.png"
             alt="TNR Solutions Logo"
-            style={{ height: '40px', width: 'auto' }}
             className="bg-white rounded-lg px-1.5 py-0.5 group-hover:scale-110 transition-transform shadow-sm"
+            style={{ height: '40px', width: 'auto' }}
             decoding="async"
           />
-          <span className="font-heading font-bold text-white text-lg tracking-wide hidden sm:block">
+          <span className={`font-heading font-bold text-lg tracking-wide hidden sm:block transition-colors duration-300 ${logoTextClass}`}>
             TNR <span className="text-orange">Solutions</span>
           </span>
         </Link>
@@ -75,13 +97,12 @@ export default function Navbar({ scrolled: startScrolled = false }: { scrolled?:
             <Link
               key={link.label + link.href}
               to={link.href}
-              className="relative text-white/80 hover:text-white font-body text-sm font-medium tracking-wide transition-colors group"
+              className={`relative font-body text-sm font-medium tracking-wide transition-colors duration-300 group ${linkClass}`}
             >
               {link.label}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange group-hover:w-full transition-all duration-300" />
             </Link>
           ))}
-          {/* Standardized "Get a Quote" CTA action layout element */}
           <Link
             to="/#contact"
             className="ml-4 px-6 py-2.5 bg-orange hover:bg-orange-light text-white font-heading font-semibold text-sm rounded-full transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(232,130,26,0.4)]"
@@ -93,7 +114,7 @@ export default function Navbar({ scrolled: startScrolled = false }: { scrolled?:
         {/* Mobile Toggle */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="lg:hidden text-white p-2 hover:bg-white/10 rounded-lg transition-colors"
+          className={`lg:hidden p-2 rounded-lg transition-colors ${mobileToggleClass}`}
           aria-label="Toggle menu"
           aria-expanded={mobileOpen}
           aria-controls="mobile-menu"
@@ -102,7 +123,7 @@ export default function Navbar({ scrolled: startScrolled = false }: { scrolled?:
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu — original dark style preserved */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div

@@ -33,7 +33,7 @@ function BoxModel({ activeScale }: { activeScale: number }) {
   useFrame((state) => {
     if (groupRef.current) {
       groupRef.current.rotation.y += 0.003;
-      const time = state.clock.getElapsedTime();
+      const time = state.clock.elapsedTime;
       groupRef.current.position.y = Math.sin(time * 1.1) * 0.06;
     }
   });

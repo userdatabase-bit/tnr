@@ -50,6 +50,7 @@ function LoadingScreen() {
       }}
     >
       <div style={{ textAlign: 'center' }}>
+        {/* Use plain img with inline styles — LoadingScreen renders before Tailwind CSS is available */}
         <img
           src="/uploads/upload_1.png"
           alt="TNR Solutions"

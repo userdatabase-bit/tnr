@@ -352,7 +352,7 @@ export default function ServiceMap() {
                     }`} />
 
                     <div className="flex items-center gap-3 p-3 lg:p-4 pl-4 lg:pl-5">
-                      <div className={`flex-shrink-0 w-9 h-9 lg:w-11 lg:h-11 rounded-lg lg:rounded-xl flex items-center justify-center transition-all duration-300 ${
+                      <div className={`flex-shrink-0 w-11 h-11 rounded-lg lg:rounded-xl flex items-center justify-center transition-all duration-300 ${
                         isActive
                           ? 'bg-orange shadow-lg shadow-orange/30'
                           : 'bg-navy/8 group-hover:bg-navy/12'
@@ -382,7 +382,7 @@ export default function ServiceMap() {
                         </div>
                       </div>
 
-                      <div className={`flex-shrink-0 w-7 h-7 lg:w-8 lg:h-8 rounded-lg flex items-center justify-center transition-all duration-300 ${
+                      <div className={`flex-shrink-0 w-11 h-11 rounded-lg flex items-center justify-center transition-all duration-300 ${
                         isActive ? 'bg-orange/10' : 'bg-transparent group-hover:bg-navy/5'
                       }`}>
                         {isActive ? (

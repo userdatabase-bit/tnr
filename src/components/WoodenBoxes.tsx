@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useGLTF, OrbitControls, Center, ContactShadows } from '@react-three/drei';
+import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import * as THREE from 'three';
 import { gsap } from '../hooks/useScrollAnimation';
@@ -47,7 +48,7 @@ function SafeBoxModel({ activeScale }: { activeScale: number }) {
     if (groupRef.current) {
       // Rotation happens directly on the inner centered model anchor
       groupRef.current.rotation.y += 0.003;
-      const time = state.clock.getElapsedTime();
+      const time = state.clock.elapsedTime;
       groupRef.current.position.y = Math.sin(time * 1.1) * 0.04;
     }
   });
@@ -252,10 +253,13 @@ export default function WoodenBoxes() {
               ))}
             </div>
 
-            <a href="#contact" className="inline-flex items-center gap-2 text-orange font-heading font-semibold text-sm hover:gap-3 transition-all group">
+            <Link
+              to="/products/wooden-pallets"
+              className="inline-flex items-center gap-2 text-orange font-heading font-semibold text-sm hover:gap-3 transition-all group"
+            >
               Explore Wooden Solutions
               <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-            </a>
+            </Link>
           </div>
 
         </div>

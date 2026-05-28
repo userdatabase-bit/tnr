@@ -37,9 +37,18 @@ export default function Pallets() {
   const trackRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    if (!trackRef.current || !sectionRef.current) return;
+    const mq = window.matchMedia('(max-width: 767px)');
+    setIsMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile || !trackRef.current || !sectionRef.current) return;
 
     const track = trackRef.current;
     const lastCard = track.lastElementChild as HTMLElement;
@@ -81,7 +90,81 @@ export default function Pallets() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [isMobile]);
+
+  // ── Mobile: render cards as vertical stack ──
+  if (isMobile) {
+    return (
+      <section
+        id="pallets"
+        className="relative bg-navy-dark overflow-hidden py-24"
+      >
+        {/* Background */}
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-10"
+          style={{ backgroundImage: `url(/images/warehouse-bg.jpg)` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-navy-dark via-navy-dark/90 to-navy-dark" />
+
+        {/* Header */}
+        <div className="relative z-10 px-6 mb-10">
+          <div className="max-w-7xl mx-auto">
+            <span className="inline-block px-4 py-1.5 bg-orange/20 text-orange font-heading font-bold text-xs tracking-[0.2em] rounded-full mb-4">
+              PALLET SOLUTIONS
+            </span>
+            <h2 className="font-heading font-black text-white text-4xl leading-tight mt-4">
+              Built to <span className="text-orange">Carry</span> the Load
+            </h2>
+          </div>
+        </div>
+
+        {/* Vertical card stack */}
+        <div className="relative z-10 px-6 space-y-6">
+          {palletTypes.map((pallet, i) => {
+            const Icon = pallet.icon;
+            return (
+              <div
+                key={pallet.title}
+                className="bg-navy/40 border border-white/10 rounded-2xl overflow-hidden group"
+              >
+                <img
+                  src={pallet.image}
+                  alt={pallet.title}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-48 object-cover opacity-70 group-hover:opacity-100 transition-opacity"
+                />
+                <div className="p-5">
+                  <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${pallet.gradient} mb-4 shadow-lg`}>
+                    <Icon className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="font-heading font-bold text-white text-2xl mb-2">{pallet.title}</h3>
+                  <p className="font-body text-white/60 text-sm leading-relaxed mb-4">{pallet.desc}</p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {pallet.stats.map((stat) => (
+                      <span
+                        key={stat}
+                        className="px-3 py-1 bg-white/10 border border-white/10 rounded-full text-white/80 text-xs font-heading font-semibold"
+                      >
+                        {stat}
+                      </span>
+                    ))}
+                  </div>
+                  <a
+                    href="#contact"
+                    className="inline-flex items-center gap-2 text-orange font-heading font-semibold text-sm"
+                  >
+                    Learn More
+                    <ArrowRight className="w-4 h-4" />
+                  </a>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section
@@ -140,8 +223,7 @@ export default function Pallets() {
                   src={pallet.image}
                   alt={pallet.title}
                   loading="lazy"
-                  width="600"
-                  height="400"
+                  decoding="async"
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 {/* Multi-layer overlay */}

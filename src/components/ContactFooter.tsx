@@ -472,6 +472,7 @@ export default function ContactFooter() {
                 src="/uploads/upload_1.png"
                 alt="TNR Solutions"
                 className="h-10 w-auto bg-white/90 rounded-lg px-2 py-1 mb-5"
+                style={{ height: '40px', width: 'auto' }}
                 loading="lazy"
                 decoding="async"
               />

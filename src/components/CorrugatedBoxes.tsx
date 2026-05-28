@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { gsap } from '../hooks/useScrollAnimation';
 import { useParallax, useParallaxDrift } from '../hooks/useScrollAnimation';
+import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 // 1. Import the new dynamic 3D component
 import { CorrugatedBox3D } from './CorrugatedBox3D'; 
@@ -161,13 +162,13 @@ export default function CorrugatedBoxes() {
               ))}
             </div>
 
-            <a
-              href="#contact"
+            <Link
+              to="/products/corrugated-boxes"
               className="inline-flex items-center gap-2 text-orange font-heading font-semibold text-sm hover:gap-3 transition-all group"
             >
               Explore Corrugated Solutions
               <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-            </a>
+            </Link>
           </div>
         </div>
       </div>

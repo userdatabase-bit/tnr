@@ -403,11 +403,10 @@ function PalletCard({
         <img
           src={pallet.image}
           alt={pallet.name}
+          loading="lazy"
+          decoding="async"
           className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-          onError={(e) => {
-            (e.target as HTMLImageElement).src =
-              "https://placehold.co/400x300/e8e0d0/8B7355?text=Wooden+Pallet";
-          }}
+          onError={(e) => { (e.target as HTMLImageElement).src = 'https://placehold.co/400x300/e8e0d0/8B7355?text=Wooden+Pallet'; }}
         />
         {pallet.badge && (
           <span
@@ -509,11 +508,10 @@ function DetailModal({
             <img
               src={pallet.image}
               alt={pallet.name}
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover"
-              onError={(e) => {
-                (e.target as HTMLImageElement).src =
-                  "https://placehold.co/600x300/e8e0d0/8B7355?text=Wooden+Pallet";
-              }}
+              onError={(e) => { (e.target as HTMLImageElement).src = 'https://placehold.co/600x300/e8e0d0/8B7355?text=Wooden+Pallet'; }}
             />
             {pallet.badge && (
               <span

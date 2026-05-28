@@ -171,7 +171,7 @@ export default function DigitalPrinting() {
                     style={positions[i]}
                     aria-label={feature.label}
                   >
-                    <div className="w-8 h-8 bg-orange/20 hover:bg-orange/40 rounded-full flex items-center justify-center transition-all border border-orange/30 hover:border-orange/60 hover:scale-110">
+                    <div className="w-11 h-11 bg-orange/20 hover:bg-orange/40 rounded-full flex items-center justify-center transition-all border border-orange/30 hover:border-orange/60 hover:scale-110">
                       <Icon className="w-4 h-4 text-orange" />
                     </div>
                     {/* Pulse ring */}

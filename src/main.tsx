@@ -4,11 +4,11 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { inject } from '@vercel/analytics'; // 1. Add this import
+import { inject } from '@vercel/analytics';
 import './index.css';
 import App from './App.tsx';
 import NotFound from './pages/NotFound';
-import WoodenPallets from './components/WoodenPallets';
+import WoodenPallets from './pages/WoodenPallets'; // ← FIXED: was './components/WoodenPallets'
 import CorrugatedBoxes from './pages/CorrugatedBoxes';
 import Products from './pages/Products';
 import ScrollToTop from './components/ScrollToTop';
@@ -19,7 +19,7 @@ import GlobalUI from './components/GlobalUI';
 // Register GSAP plugins once at app entry — avoids repeated registerPlugin() calls in components
 gsap.registerPlugin(ScrollTrigger);
 
-// 2. Initialize Vercel Analytics tracking
+// Initialize Vercel Analytics tracking
 inject();
 
 createRoot(document.getElementById('root')!).render(

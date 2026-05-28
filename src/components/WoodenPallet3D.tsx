@@ -30,7 +30,7 @@ function PalletModel() {
       groupRef.current.rotation.y += 0.005;
 
       // Gentle floating loop
-      const time = state.clock.getElapsedTime();
+      const time = state.clock.elapsedTime;
       groupRef.current.position.y = Math.sin(time * 1.5) * 0.12;
     }
   });

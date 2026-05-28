@@ -90,7 +90,7 @@ export default function Testimonials() {
           <button
             onClick={prev}
             aria-label="Previous testimonial"
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-14 hidden sm:flex w-10 h-10 items-center justify-center rounded-full bg-white border border-navy/10 shadow-md hover:border-orange/30 hover:shadow-lg hover:scale-110 transition-all z-10"
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-14 hidden sm:flex w-11 h-11 items-center justify-center rounded-full bg-white border border-navy/10 shadow-md hover:border-orange/30 hover:shadow-lg hover:scale-110 transition-all z-10"
           >
             <ChevronLeft className="w-5 h-5 text-navy" />
           </button>
@@ -99,7 +99,7 @@ export default function Testimonials() {
           <button
             onClick={next}
             aria-label="Next testimonial"
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-14 hidden sm:flex w-10 h-10 items-center justify-center rounded-full bg-white border border-navy/10 shadow-md hover:border-orange/30 hover:shadow-lg hover:scale-110 transition-all z-10"
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-14 hidden sm:flex w-11 h-11 items-center justify-center rounded-full bg-white border border-navy/10 shadow-md hover:border-orange/30 hover:shadow-lg hover:scale-110 transition-all z-10"
           >
             <ChevronRight className="w-5 h-5 text-navy" />
           </button>
@@ -169,7 +169,7 @@ export default function Testimonials() {
             <button
               onClick={prev}
               aria-label="Previous testimonial"
-              className="w-10 h-10 flex items-center justify-center rounded-full bg-white border border-navy/10 shadow-md"
+              className="w-11 h-11 flex items-center justify-center rounded-full bg-white border border-navy/10 shadow-md"
             >
               <ChevronLeft className="w-5 h-5 text-navy" />
             </button>
@@ -179,7 +179,7 @@ export default function Testimonials() {
             <button
               onClick={next}
               aria-label="Next testimonial"
-              className="w-10 h-10 flex items-center justify-center rounded-full bg-white border border-navy/10 shadow-md"
+              className="w-11 h-11 flex items-center justify-center rounded-full bg-white border border-navy/10 shadow-md"
             >
               <ChevronRight className="w-5 h-5 text-navy" />
             </button>

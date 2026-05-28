@@ -5,15 +5,15 @@ import { Menu, X } from 'lucide-react';
 
 // Reconfigured to exactly match your requested text labels and order structure
 const navLinks = [
-  { label: 'Products',         href: '/products/wooden-pallets' },
-  { label: 'Corrugated box',   href: '/#corrugated' },
-  { label: 'Wooden pallets',   href: '/products/wooden-pallets' },
-  { label: 'Wooden boxes',     href: '/#wooden' },
-  { label: 'Printing',         href: '/#printing' },
+  { label: 'Products',           href: '/products' },
+  { label: 'Corrugated box',     href: '/#corrugated' },
+  { label: 'Wooden pallets',     href: '/#pallets' },
+  { label: 'Wooden box',         href: '/#wooden' },
+  { label: 'Printing',           href: '/#printing' },
 ];
 
-export default function Navbar() {
-  const [scrolled,    setScrolled]    = useState(false);
+export default function Navbar({ scrolled: startScrolled = false }: { scrolled?: boolean }) {
+  const [scrolled,    setScrolled]    = useState(startScrolled);
   const [mobileOpen,  setMobileOpen]  = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 

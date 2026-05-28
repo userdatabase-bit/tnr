@@ -9,6 +9,8 @@ import './index.css';
 import App from './App.tsx';
 import NotFound from './pages/NotFound';
 import WoodenPallets from './components/WoodenPallets';
+import CorrugatedBoxes from './pages/CorrugatedBoxes';
+import Products from './pages/Products';
 import ScrollToTop from './components/ScrollToTop';
 import ScrollToHash from './components/ScrollToHash';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -30,7 +32,9 @@ createRoot(document.getElementById('root')!).render(
           <ScrollToHash />
           <Routes>
             <Route path="/" element={<App />} />
+            <Route path="/products" element={<Products />} />
             <Route path="/products/wooden-pallets" element={<WoodenPallets />} />
+            <Route path="/products/corrugated-boxes" element={<CorrugatedBoxes />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

@@ -44,14 +44,14 @@ export default function WoodenPallets() {
         </script>
       </Helmet>
 
-      <Navbar />
+      <Navbar scrolled />
       <div className="min-h-screen bg-offwhite">
         {/* Breadcrumb */}
         <div className="max-w-7xl mx-auto px-6 pt-28 pb-4">
           <nav className="inline-flex items-center gap-2 text-navy/60 font-body text-sm font-medium">
             <Link to="/" className="hover:text-orange transition-colors">Home</Link>
             <span aria-hidden="true">&gt;</span>
-            <span>Products</span>
+            <Link to="/products" className="hover:text-orange transition-colors">Products</Link>
             <span aria-hidden="true">&gt;</span>
             <span className="text-navy/80">Wooden Pallets</span>
           </nav>

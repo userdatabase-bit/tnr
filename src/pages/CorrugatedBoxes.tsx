@@ -204,10 +204,11 @@ const containerVariants = {
   visible: { transition: { staggerChildren: 0.08 } },
 };
 
+// Fixed with `as const` to stop TypeScript's type widening issue on build
 const cardVariants = {
   hidden: { opacity: 0, y: 24 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: 'easeOut' } },
-};
+} as const;
 
 // ─── Page Component ───────────────────────────────────────────────────────────
 export default function CorrugatedBoxes() {

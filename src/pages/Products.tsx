@@ -9,15 +9,17 @@ const containerVariants = {
   visible: { transition: { staggerChildren: 0.15 } },
 };
 
+// Fixed with `as const` to resolve TypeScript's string literal widening issue on build
 const cardVariants = {
   hidden: { opacity: 0, y: 40 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
-};
+} as const;
 
+// Fixed with `as const` to ensure proper mapping of animation literals
 const iconEntryVariants = {
   hidden: { scale: 0, rotate: -10 },
   visible: { scale: 1, rotate: 0, transition: { duration: 0.5, delay: 0.2, ease: 'easeOut' } },
-};
+} as const;
 
 // ── Hover animation variants (used with whileHover variant propagation) ──────
 

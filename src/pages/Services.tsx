@@ -3,10 +3,10 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useMemo } from 'react';
 import Navbar from '../components/Navbar';
-import { COMPANY_NAME, SITE_URL, SERVICES_GST_NUMBER } from '../constants';
+import { COMPANY_NAME, SITE_URL, SERVICES_GST_NUMBER, SERVICES_ADDRESS } from '../constants';
 import { 
   Globe, Monitor, Code, ArrowRight, CheckCircle,
-  Star, Clock, Users, BarChart3, ChevronRight
+  Star, Clock, Users, BarChart3, ChevronRight, ExternalLink
 } from 'lucide-react';
 
 // ── Animation variants ────────────────────────────────────────────────────────
@@ -448,6 +448,32 @@ export default function Services() {
             >
               Request a Quote <ArrowRight className="w-4 h-4" />
             </Link>
+          </div>
+        </section>
+
+        {/* ── Services Office Address ── */}
+        <section className="bg-navy-dark/95 border-t border-white/5">
+          <div className="max-w-7xl mx-auto px-6 py-8">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center"
+            >
+              <span className="font-body text-white/30 text-xs font-medium tracking-wider">SERVICES OFFICE</span>
+              <p className="font-body text-white/60 text-sm mt-2 max-w-xl mx-auto leading-relaxed">
+                {SERVICES_ADDRESS}
+              </p>
+              <a
+                href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(SERVICES_ADDRESS)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-4 py-2 mt-4 bg-orange hover:bg-orange-light text-white font-heading font-semibold text-xs rounded-full transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(232,130,26,0.4)]"
+              >
+                <ExternalLink size={14} />
+                Get Directions
+              </a>
+            </motion.div>
           </div>
         </section>
 

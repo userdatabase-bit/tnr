@@ -379,6 +379,8 @@ function CorrugatedCard({
           alt={product.name}
           loading="lazy"
           decoding="async"
+          width={400}
+          height={300}
           className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
           onError={(e) => { (e.target as HTMLImageElement).src = 'https://placehold.co/400x300/e8e0d0/8B7355?text=Corrugated+Box'; }}
         />
@@ -484,6 +486,8 @@ function DetailModal({
               alt={product.name}
               loading="lazy"
               decoding="async"
+              width={600}
+              height={224}
               className="w-full h-full object-cover"
               onError={(e) => { (e.target as HTMLImageElement).src = 'https://placehold.co/600x300/e8e0d0/8B7355?text=Corrugated+Box'; }}
             />

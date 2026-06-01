@@ -31,7 +31,7 @@ const pallets: Pallet[] = [
   {
     id: 1,
     name: "Two Ways Wooden Pallet",
-    image: "https://cpimg.tistatic.com/06000038/b/4/Two-Ways-Wooden-Pallet.jpg",
+    image: "/images/wooden-pallets/two-ways-wooden-pallet.jpg",
     badge: "Popular",
     description:
       "Standard two-way entry wooden pallets suitable for forklift and hand pallet trucks. Ideal for warehousing and logistics operations requiring reliable load support.",
@@ -51,7 +51,7 @@ const pallets: Pallet[] = [
   {
     id: 2,
     name: "Warehouse Wooden Pallets",
-    image: "https://cpimg.tistatic.com/06000041/b/4/Warehouse-Wooden-Pallets.jpg",
+    image: "/images/wooden-pallets/warehouse-wooden-pallets.jpg",
     description:
       "Euro-style double-faced wooden pallets designed specifically for warehouse storage and racking systems. Built to withstand heavy stacking loads.",
     specs: [
@@ -67,7 +67,7 @@ const pallets: Pallet[] = [
   {
     id: 3,
     name: "Heavy Duty Pallets",
-    image: "https://cpimg.tistatic.com/06000040/b/4/Heavy-Duty-Pallets.jpg",
+    image: "/images/wooden-pallets/heavy-duty-pallets.jpg",
     badge: "Best Seller",
     description:
       "Heavy-duty single-faced pallets with 2-way entry for both forklift and handlift access. Built for demanding industrial environments with high load requirements.",
@@ -86,7 +86,7 @@ const pallets: Pallet[] = [
   {
     id: 4,
     name: "Industrial Heat Treated Wooden Pallets",
-    image: "https://cpimg.tistatic.com/06000039/b/4/Industrial-Heat-Treated-Wooden-Pallets.jpg",
+    image: "/images/wooden-pallets/industrial-heat-treated-pallets.jpg",
     badge: "Export Ready",
     description:
       "ISPM-15 compliant heat-treated wooden pallets for international shipping. Double-faced construction ensures durability during long-distance transport.",
@@ -105,7 +105,7 @@ const pallets: Pallet[] = [
   {
     id: 5,
     name: "Pinewood Pallet",
-    image: "https://cpimg.tistatic.com/06000043/b/4/Pinewood-Pallet.jpg",
+    image: "/images/wooden-pallets/pinewood-pallet.jpg",
     description:
       "Lightweight pinewood pallets with collar pallet design. Double-faced and cost-effective for light-to-medium load applications in retail and storage.",
     specs: [
@@ -121,7 +121,7 @@ const pallets: Pallet[] = [
   {
     id: 6,
     name: "Hardwood Industrial Wooden Pallets",
-    image: "https://cpimg.tistatic.com/06000042/b/4/Hardwood-Industrial-Wooden-Pallets.jpg",
+    image: "/images/wooden-pallets/hardwood-industrial-pallets.jpg",
     badge: "Heavy Load",
     description:
       "Premium 4-way entry hardwood pallets for maximum load-bearing capacity. Available in multiple standard sizes to suit diverse industrial requirements.",
@@ -140,7 +140,7 @@ const pallets: Pallet[] = [
   {
     id: 7,
     name: "Four Way Wooden Pallets",
-    image: "https://cpimg.tistatic.com/05845820/b/4/Four-Way-Wooden-Pallets.jpg",
+    image: "/images/wooden-pallets/four-way-wooden-pallets.jpg",
     description:
       "Versatile 4-way entry pallets allowing forklift access from all four sides for maximum handling flexibility on busy warehouse floors.",
     specs: [
@@ -156,7 +156,7 @@ const pallets: Pallet[] = [
   {
     id: 8,
     name: "Heavy Duty Wooden Pallets",
-    image: "https://cpimg.tistatic.com/05845818/b/4/Heavy-Duty-Wooden-Pallets.jpg",
+    image: "/images/wooden-pallets/heavy-duty-wooden-pallets.jpg",
     badge: "High Volume",
     description:
       "Industrial-grade heavy-duty pallets with flat/slatted deck construction. Handles up to 3000 kg — ideal for manufacturing plants and large-scale storage facilities.",
@@ -175,7 +175,7 @@ const pallets: Pallet[] = [
   {
     id: 9,
     name: "Commercial Wooden Pallets",
-    image: "https://cpimg.tistatic.com/05845819/b/4/Commercial-Wooden-Pallets.jpg",
+    image: "/images/wooden-pallets/commercial-wooden-pallets.jpg",
     description:
       "Double-faced commercial pallets designed for retail distribution and supply chains. Customizable dimensions to fit specific logistics needs.",
     specs: [
@@ -194,7 +194,7 @@ const pallets: Pallet[] = [
   {
     id: 10,
     name: "Customized Wooden Pallets",
-    image: "https://cpimg.tistatic.com/04943343/b/4/Customized-Wooden-Pallets.jpg",
+    image: "/images/wooden-pallets/customized-wooden-pallets.jpg",
     badge: "Custom",
     description:
       "Fully customizable wooden pallets manufactured to your exact specifications. Specify size, wood type, entry style, and load capacity to match your unique workflow.",
@@ -407,6 +407,8 @@ function PalletCard({
           alt={pallet.name}
           loading="lazy"
           decoding="async"
+          width={400}
+          height={300}
           className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
           onError={(e) => { (e.target as HTMLImageElement).src = 'https://placehold.co/400x300/e8e0d0/8B7355?text=Wooden+Pallet'; }}
         />
@@ -513,6 +515,8 @@ function DetailModal({
               alt={pallet.name}
               loading="lazy"
               decoding="async"
+              width={600}
+              height={224}
               className="w-full h-full object-cover"
               onError={(e) => { (e.target as HTMLImageElement).src = 'https://placehold.co/600x300/e8e0d0/8B7355?text=Wooden+Pallet'; }}
             />

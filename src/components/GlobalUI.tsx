@@ -46,7 +46,7 @@ function LoadingScreen() {
         justifyContent:  'center',
         opacity,
         transition:      'opacity 0.5s ease',
-        pointerEvents:   opacity < 1 ? 'none' : 'auto',
+        pointerEvents: opacity === 1 ? 'auto' : 'none',
       }}
     >
       <div style={{ textAlign: 'center' }}>

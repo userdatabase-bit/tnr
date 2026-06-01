@@ -14,6 +14,7 @@ export const WHATSAPP_NUMBER  = '919999640071'; // country code + number, no + o
 export const ADDRESS_LINE1 = 'Site C Surajpur Industrial Area Greater Noida';
 export const ADDRESS_LINE2 = 'Uttar Pradesh – 201306, India';
 export const GST_NUMBER    = 'GSTIN: 09CDSPS1891J3ZJ';
+export const SERVICES_GST_NUMBER = 'GSTIN: 07CDSPS1891J1ZP';
 export const COMPANY_NAME  = 'TNR Solutions Pvt. Ltd.';
 
 // Social (add real URLs when available)
